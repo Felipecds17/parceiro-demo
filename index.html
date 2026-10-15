@@ -122,8 +122,25 @@ a{color:inherit}
 .brand-t{display:flex;flex-direction:column;line-height:1.1}
 .brand-n{font-family:var(--serif);font-weight:600;font-size:20px;letter-spacing:-.005em}
 .brand-s{font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin-top:3px}
-.head-act{display:flex;gap:8px}
+.head-act{display:flex;gap:6px}
 .icon-btn{width:42px;height:42px;border-radius:10px;display:grid;place-items:center;border:1px solid var(--line);color:var(--ink-2);flex:none}
+.fsz{display:flex;height:42px;border:1px solid var(--line);border-radius:10px;overflow:hidden;flex:none}
+.fsz button{width:42px;display:grid;place-items:center;font-family:var(--serif);font-weight:600;color:var(--ink);line-height:1}
+.fsz button+button{border-left:1px solid var(--line)}
+.fsz .fs-m{font-size:15px}
+.fsz .fs-p{font-size:21px}
+.fsz button:active:not(:disabled){background:var(--surface-3)}
+/* tamanho da letra: o conteúdo inteiro escala junto, como o zoom do navegador */
+.view>.wrap,.push>.wrap,.sheet-body{zoom:var(--z,1)}
+.big .pos{grid-template-columns:1fr}
+.big .pos-c{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;padding:14px 0;gap:4px 12px}
+.big .pos-c+.pos-c{border-left:0;border-top:1px solid var(--line)}
+.big .pos-n{min-height:0}
+.big .pos-v{grid-row:1 / span 2;grid-column:2}
+.big .facts,.big .stat{grid-template-columns:1fr}
+.big .facts>div,.big .facts>div+div{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:11px 0;border-left:0;border-bottom:1px solid var(--line)}
+.big .facts dd{margin:0}
+.big .stat>div,.big .stat>div:nth-child(2n){padding-left:0;border-left:0}
 .avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;border:1px solid color-mix(in srgb,var(--accent) 55%,transparent);color:var(--accent);font-family:var(--serif);font-weight:600;font-size:18px}
 .back{display:flex;align-items:center;gap:2px;min-height:42px;padding-right:10px;font-weight:600;font-size:16px;color:var(--ink-2)}
 .back .ic{width:24px;height:24px}
@@ -138,9 +155,9 @@ a{color:inherit}
 
 /* ── Tipografia e seções ── */
 .sec{margin-top:36px}
-.sh{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.sh{display:flex;align-items:center;gap:8px 12px;margin-bottom:12px;flex-wrap:wrap}
 .sh h2{margin:0;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap}
-.sh i{flex:1;height:1px;background:var(--line)}
+.sh i{flex:1;min-width:16px;height:1px;background:var(--line)}
 .sh-n{font-size:13px;color:var(--ink-3);white-space:nowrap}
 .sh-link{font-size:13px;font-weight:600;color:var(--accent);white-space:nowrap}
 .eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
@@ -197,11 +214,11 @@ a{color:inherit}
 .obra .art{border-bottom:1px solid var(--line)}
 .art svg{display:block;width:100%;height:auto}
 .obra-b{padding:16px 18px 18px}
-.obra-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.obra-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
 .obra-name{font-family:var(--serif);font-size:28px;font-weight:600;line-height:1.1;margin-top:5px;letter-spacing:-.01em}
 .obra-addr{font-size:14px;color:var(--ink-3);margin-top:3px}
 .prog{margin-top:16px}
-.prog-l{display:flex;justify-content:space-between;gap:10px;font-size:14px;color:var(--ink-2)}
+.prog-l{display:flex;justify-content:space-between;gap:4px 10px;font-size:14px;color:var(--ink-2);flex-wrap:wrap}
 .prog-l b{color:var(--ink);font-weight:600}
 .bar{height:4px;background:var(--surface-3);border-radius:2px;overflow:hidden;margin-top:9px}
 .bar>i{display:block;height:100%;background:var(--accent)}
@@ -297,7 +314,7 @@ a{color:inherit}
 
 /* ── Aluguéis ── */
 .imo{padding:18px}
-.imo-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.imo-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
 .imo-n{font-family:var(--serif);font-weight:600;font-size:22px;line-height:1.2}
 .imo-s{font-size:14px;color:var(--ink-3);margin-top:2px}
 .imo-note{margin-top:14px;font-size:14.5px;color:var(--ink-2);line-height:1.5}
@@ -537,9 +554,11 @@ var CATS = {
   fab: { ins: ['Insumos', 'box'], mao: ['Mão de obra', 'worker'], mnt: ['Manutenção', 'tool'], fre: ['Frete', 'truck'], imp: ['Impostos', 'doc'], out: ['Outros', 'dots'] }
 };
 var IMPOSTO = 0.06;
+var FS = [0.9, 1, 1.15, 1.3, 1.45];
+var FSN = ['Letra pequena', 'Letra normal', 'Letra grande', 'Letra maior', 'Letra bem grande'];
 
 var S = {
-  tab: 'inicio', fc: 'all', ret: 0, nome: store('parceiro-nome') || '',
+  tab: 'inicio', fc: 'all', ret: 0, nome: store('parceiro-nome') || '', fs: 1,
   push: null, sim: {},
   bolsos: {
     con: { nome: 'Greg Fomento', da: 'da Greg Fomento', doc: 'CNPJ · construção', ic: 'obra', saldo: 86420, mov: [
@@ -862,7 +881,7 @@ function temaEscuro(){
 function head(){
   var dark = temaEscuro();
   return '<header class="apphead"><div class="brand"><span class="mono">P</span><span class="brand-t"><span class="brand-n">Parceiro</span><span class="brand-s">Demonstração</span></span></div>' +
-    '<div class="head-act"><button class="icon-btn" data-act="tema" aria-label="' + (dark ? 'Usar tema claro' : 'Usar tema escuro') + '">' + ic(dark ? 'sun' : 'moon') + '</button>' +
+    '<div class="head-act"><div class="fsz" role="group" aria-label="Tamanho da letra"><button class="fs-m" data-act="fs" data-v="-1" aria-label="Diminuir a letra"' + (S.fs <= 0 ? ' disabled' : '') + '>A−</button><button class="fs-p" data-act="fs" data-v="1" aria-label="Aumentar a letra"' + (S.fs >= FS.length - 1 ? ' disabled' : '') + '>A+</button></div><button class="icon-btn" data-act="tema" aria-label="' + (dark ? 'Usar tema claro' : 'Usar tema escuro') + '">' + ic(dark ? 'sun' : 'moon') + '</button>' +
     '<button class="avatar" data-act="nome" aria-label="Como o app te chama">' + (S.nome ? esc(S.nome.trim().charAt(0).toUpperCase()) : ic('user')) + '</button></div></header>';
 }
 
@@ -1469,6 +1488,7 @@ app.addEventListener('click', function(e){
       store('parceiro-tema', dark ? 'light' : 'dark'); refresh(); break;
     }
     case 'nome': sheetNome(); break;
+    case 'fs': { var ni = Math.max(0, Math.min(FS.length - 1, S.fs + (+t.dataset.v))); if (ni === S.fs) break; aplicarFonte(ni); store('parceiro-fonte', String(ni)); refreshHeads(); toast(FSN[ni]); break; }
     case 'bolso': sheetBolso(id); break;
     case 'alug': sheetAlug(id); break;
     case 'contas': { var sc = $('#sec-contas'); if (sc) views.inicio.scrollTo({ top: sc.offsetTop - 70, behavior: 'smooth' }); break; }
@@ -1565,7 +1585,14 @@ app.addEventListener('submit', function(e){
   }
 });
 
+function aplicarFonte(i){ S.fs = i; app.style.setProperty('--z', FS[i]); app.classList.toggle('big', FS[i] >= 1.3); }
+function refreshHeads(){
+  var v = views[S.tab], st = v.scrollTop; render(S.tab); v.scrollTop = st;
+  if (S.push) { var ps = push.scrollTop; push.innerHTML = renderObra(); push.scrollTop = ps; updateSim(S.push.id); }
+}
 /* ═══════════ Partida ═══════════ */
+var fsSalvo = parseInt(store('parceiro-fonte'), 10);
+aplicarFonte(fsSalvo >= 0 && fsSalvo < FS.length ? fsSalvo : 1);
 var temaSalvo = store('parceiro-tema');
 if (temaSalvo === 'light' || temaSalvo === 'dark') document.documentElement.setAttribute('data-theme', temaSalvo);
 if (window.matchMedia) { try { window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function(){ refresh(); }); } catch (e) {} }
